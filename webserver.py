@@ -8,27 +8,7 @@ APPLICATION_NAME = "Family Tree Application"
 
 @app.route('/data/data')
 def send_js():
-    print("blabla")
-    # return send_from_directory('data', 'charlie.json')
-    return '''{
-        "comment": "Charlize Theron's 'ego' network as GraphJSON",
-        "nodes": [{
-                "caption": "Screen Actors Guild Award for Outstanding Performance by a Female Actor in a Miniseries or Television Movie",
-                "type": "award",
-                "id": 595472
-            },
-            {
-                "caption": "Children of the Corn III: Urban Harvest",
-                "type": "movie",
-                "id": 626470
-            }
-        ],
-        "edges": [{
-            "source": 626470,
-            "target": 595472,
-            "caption": "ACTED_IN"
-        }]
-    }'''
+    return str(database.format_results(database.query())).replace("'", '"')
 
 
 @app.route('/regions')
@@ -38,8 +18,7 @@ def get_regions():
     return region, wsr
     :return:
     """
-    database.query()
-    return ""
+    return database.format_results(database.query())
 
 
 @app.route("/")
