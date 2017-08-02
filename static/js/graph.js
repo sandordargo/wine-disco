@@ -20,6 +20,13 @@ function graph() {
 var nodes = graph()["nodes"]
 var links = graph()["links"]
 
+var zoom = d3.zoom()
+    .scaleExtent([1, 40])
+    .translateExtent([[-100, -100], [width + 90, height + 100]])
+    .on("zoom", zoomed);
+
+
+var margin = {top: -5, right: -5, bottom: -5, left: -5}
 function update(nodes_to_add, links_to_add) {
   svg.selectAll("*").remove();
   
@@ -58,7 +65,7 @@ function update(nodes_to_add, links_to_add) {
   node.append("title")
       .attr("title", function(d) { return d.type + ": " + d.caption; })
       .text(function(d) { return d.type + ": " + d.caption; });
-
+  svg.call(zoom)
   simulation
     .nodes(nodes_to_display)
     .on("tick", ticked);
@@ -84,6 +91,13 @@ function click(d)
     expandNode(d)
 }
 
+function zoomed() {
+    svg.attr("transform", d3.event.transform);
+    var xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([0, 10]);
+    var yScale = d3.scaleLinear().range([height - margin.top, margin.bottom]).domain([0,300]);
+    var xAxis = d3.axisBottom().scale(xScale);
+    var yAxis = d3.axisLeft().scale(yScale);
+}
 
 function dragstarted(d) {
   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
