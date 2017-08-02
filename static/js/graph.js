@@ -21,27 +21,16 @@ var nodes = graph()["nodes"]
 var links = graph()["links"]
 
 var zoom = d3.zoom()
-    .scaleExtent([1, 40])
+    .scaleExtent([1, 10])
     .translateExtent([[-100, -100], [width + 90, height + 100]])
     .on("zoom", zoomed);
 
 
 var margin = {top: -5, right: -5, bottom: -5, left: -5}
-function update(nodes_to_add, links_to_add) {
+function update() {
   svg.selectAll("*").remove();
-  
-  if (links_to_add == links) { 
-    links_to_display = links_to_add 
-  } else {
-    links_to_display = links_to_add.concat(links);
-  }
-  
-  if (nodes_to_add == nodes) { 
-    nodes_to_display = nodes_to_add 
-  } else {
-    nodes_to_display = nodes_to_add.concat(nodes);
-  }
-
+  links_to_display = links
+  nodes_to_display = nodes
   var link = svg.append("g")
     .attr("class", "links")
     .selectAll("line")
@@ -92,8 +81,8 @@ function click(d)
 }
 
 function zoomed() {
-    svg.attr("transform", d3.event.transform);
-    var xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([0, 10]);
+    svg.attr("transform", d3.event.transform).append("g");
+    var xScale = d3.scaleLinear().range([margin.left, width - margin.right]).domain([0.4, 10]);
     var yScale = d3.scaleLinear().range([height - margin.top, margin.bottom]).domain([0,300]);
     var xAxis = d3.axisBottom().scale(xScale);
     var yAxis = d3.axisLeft().scale(yScale);
@@ -103,11 +92,11 @@ function dragstarted(d) {
   if (!d3.event.active) simulation.alphaTarget(0.3).restart();
   d.fx = d.x;
   d.fy = d.y;
-}
+
 
 function dragged(d) {
-  d.fx = d3.event.x;
-  d.fy = d3.event.y;
+ d.fx = d3.event.x;
+ d.fy = d3.event.y;
 }
 
 function dragended(d) {
@@ -117,16 +106,46 @@ function dragended(d) {
 }
 
 function expandNode(d) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "/data/grapes_at_subregion/" + d.id, false ); // false for synchronous request
-  xmlHttp.send( null );
-  needed = JSON.parse(xmlHttp.responseText);
+  if (d.type == "WineSubRegion") {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open( "GET", "/data/grapes_at_subregion/" + d.id, false ); // false for synchronous request
+      xmlHttp.send( null );
+      needed = JSON.parse(xmlHttp.responseText);
 
-  new_nodes = needed["nodes"]
-  console.info(new_nodes)
-  for (node in new_nodes) {
-    if (new_nodes[node].id == d.id) new_nodes.splice(node, 1)
+      new_nodes = needed["nodes"]
+      console.info(new_nodes)
+      for (node in new_nodes) {
+        if (new_nodes[node].id == d.id) {
+          new_nodes.splice(node, 1)
+          break;
+        }
+
+      }
+
+      var i = 0;
+      var stop = false
+
+      while (i < new_nodes.length) {
+        for (node in new_nodes) {
+          for (old_node in nodes) {
+            if (new_nodes[node].id == nodes[old_node].id) {
+              new_nodes.splice(node, 1)
+              stop = true
+              console.info('sliced')
+              break
+            }
+          }
+        }
+        i++;
+        if (stop == true) break;
+      }
+
+      nodes = nodes.concat(new_nodes)
+      new_links = needed["links"]
+      links  = links.concat(new_links)
+      if (new_links.length > 0 || new_nodes.length > 0) {
+        console.info("update")
+        update()
+      }
   }
-  new_links = needed["links"]
-  update(new_nodes, new_links)
 }
