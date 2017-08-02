@@ -1,178 +1,36 @@
 <head>
   <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="static/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    .row > div {
+        margin-top:10px;
+        padding: 20px;
+        outline: 2px solid #ccc;
+        outline-offset: -10px;
+        -moz-outline-radius: 10px;
+        -webkit-outline-radius: 10px;
+     }
+
+    .links line {
+      stroke: #999;
+      stroke-opacity: 0.6;
+    }
+
+    .nodes circle {
+      stroke: #fff;
+      stroke-width: 1.5px;
+    }
+
+  </style>
 </head>
-<style>
-
-.row > div {
-    margin-top:10px;
-    padding: 20px;
-    outline: 2px solid #ccc;
-    outline-offset: -10px;
-    -moz-outline-radius: 10px;
-    -webkit-outline-radius: 10px;
- }
-
-</style>
 <body>
-
-  <div class="alchemy" id="network"></div>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.4/lodash.min.js"></script>
-    <style>
-
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
-}
-
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-</style>
-<svg width="960" height="600"></svg>
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<script>
-
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height");
-
-var color = d3.scaleOrdinal(d3.schemeCategory20);
-
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody())
-    .force("center", d3.forceCenter(width / 2, height / 2));
-
-function graph() {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/data/data", false ); // false for synchronous request
-    xmlHttp.send( null );
-    var text = xmlHttp.responseText;
-    console.info(text);
-    var json = JSON.stringify(eval("(" + text + ")"));
-    console.info(json);
-
-    return JSON.parse(text);
-    
-  }
-
-var n = graph()["nodes"]
-var map = {"id": 212, "caption":"Bordeaux", "type":"WineSubRegion"}
-
-var l = graph()["links"]
-console.log(n)
-
-
-function update(no, li) {
-  svg.selectAll("*").remove();
-  if (li == l) { links = li }
-  else {
-    links = li.concat(l);
-  }
-  if (no == n) { nodes = no }
-  else {nodes = no.concat(n);}
-
-  var link = svg.append("g")
-      .attr("class", "links")
-    .selectAll("line")
-    .data(links)
-    .enter().append("line")
-      .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
-
-  var node = svg.append("g")
-      .attr("class", "nodes")
-    .selectAll("circle")
-    .data(nodes)
-    .enter().append("circle")
-      .attr("r", 8)
-      .attr("fill", function(d) { return color(d.caption); })
-      .on("click", click)
-      .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
-
-  node.append("title")
-      .attr("title", function(d) { return d.type + ": " + d.caption; })
-      .text(function(d) { return d.type + ": " + d.caption; });
-
-  simulation
-      .nodes(nodes)
-      .on("tick", ticked);
-
-  simulation.force("link")
-      .links(links);
-
-function ticked(d) {
-  link
-      .attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
-
-  node
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-  }
-};
-
-function click(d) 
-{
-    console.log(d.caption); //considering dot has a title attribute
-    addNode(d)
-}
-
-
-function dragstarted(d) {
-  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-  d.fx = d.x;
-  d.fy = d.y;
-}
-
-function dragged(d) {
-  d.fx = d3.event.x;
-  d.fy = d3.event.y;
-}
-
-function dragended(d) {
-  if (!d3.event.active) simulation.alphaTarget(0);
-  d.fx = null;
-  d.fy = null;
-}
-
-function addNode(d) {
-  var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "/data/grapes_at_subregion/" + d.id, false ); // false for synchronous request
-  xmlHttp.send( null );
-  var text = xmlHttp.responseText;
-  var json = JSON.stringify(eval("(" + text + ")"));
-  console.info(json);
-
-  needed = JSON.parse(text);
-  newnodes = needed["nodes"]
-  console.info(newnodes)
-  for (node in newnodes) {
-    console.info(node)
-    if (newnodes[node].id == d.id) newnodes.splice(node, 1)
-
-  }
-  newlinks = needed["links"]
-  // n.push(needed["nodes"])
-  // l.push(needed["links"])
-  update(newnodes, newlinks)
-}
-
-update(n, l)
-
-
-    </script>
-</div>
-  </body>
-</html>
+  <div style="border:1px solid black">
+  <svg style="border:1px solid black"></svg>
+  </div>
+  <script src="static/js/graph.js"></script>
+  <script>
+    update(nodes, links)
+  </script>
+</body>
