@@ -46,6 +46,10 @@ def get_wineregion_by_id(id):
     result_set = execute_query("match (r:WineRegion) where id(r)= {} return r".format(id))
     return result_set[0]["r"].get("name")
 
+def get_subregions_for_grape(id):
+    result_set = execute_query("match (grape:Grape)-[relationship:GROWS_AT]->(wsr:WineSubRegion) where id(grape) = {} return wsr, grape, relationship".format(id))
+    return result_set
+
 
 def execute_query(query):
     driver = GraphDatabase.driver("bolt://localhost:7687", auth=basic_auth("neo4j", "neo4j"))

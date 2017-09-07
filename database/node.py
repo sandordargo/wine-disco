@@ -3,6 +3,7 @@ class Node(object):
         self.caption = caption
         self.type = type
         self.id = id
+        self.expanded = False
 
     def to_json(self):
-        return {"caption": self.caption, "type": self.type, "id": self.id}
+        return {"caption": self.caption, "type": self.type, "id": self.id, "expanded": "false"}

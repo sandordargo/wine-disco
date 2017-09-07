@@ -1,6 +1,7 @@
 from database import database
 from flask import Flask, render_template
 from grapes_grown_at_subregion import GrapesGrownAtSubregion
+from grape_by_subregions import GrapeBySubregions
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -15,6 +16,11 @@ def get_all_regions_and_subregions():
 @app.route('/data/grapes_at_subregion/<subregion>')
 def get_sub_region_details_2(subregion):
     return str(GrapesGrownAtSubregion(subregion))
+
+
+@app.route('/data/subregions_of_grape/<grape>')
+def get_subregions_of_grape(grape):
+    return str(GrapeBySubregions(grape))
 
 
 @app.route("/")
