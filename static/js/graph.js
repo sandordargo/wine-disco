@@ -100,140 +100,77 @@ function dragended(d) {
 
 function expandNode(d) {
   if (d.type == "WineSubRegion" && (d.expanded == "false" || d.expanded == false)) {
-      needed = getJsonFrom("/data/grapes_at_subregion/" + d.id)
-
-      new_nodes = needed["nodes"]
-  
-      for (node in new_nodes) {
-        if (new_nodes[node].id == d.id) {
-          new_nodes.splice(node, 1)
-          break;
-        }
-
-      }
-
-      var i = 0;
-      var stop = false
-
-      while (i < new_nodes.length) {
-        for (node in new_nodes) {
-          for (old_node in nodes) {
-            if (new_nodes[node].id == nodes[old_node].id) {
-              new_nodes.splice(node, 1)
-              stop = true
-              console.info('sliced')
-              break
-            }
-          }
-        }
-        i++;
-        if (stop == true) break;
-      }
-
-      nodes = nodes.concat(new_nodes)
-      new_links = needed["links"]
-      links  = links.concat(new_links)
-      d.expanded = true;
-      if (new_links.length > 0 || new_nodes.length > 0) {
-        console.info("update")
-        update()
-      }
+      needed = getJsonFrom("/data/grapes_at_subregion/" + d.id);
+      genericExpand(d, needed["nodes"], needed["links"]);
   } else if (d.type == "Grape" && (d.expanded == "false" || d.expanded == false)) {
-    needed = getJsonFrom("/data/subregions_of_grape/" + d.id)
-
-      new_nodes = needed["nodes"]
-  
-      for (node in new_nodes) {
-        if (new_nodes[node].id == d.id) {
-          console.info("not adding twice" + new_nodes[node].caption)
-          new_nodes.splice(node, 1)
-          
-        }
-
-      }
-
-      var i = 0;
-      var stop = false
-
-      while (i <= new_nodes.length + 1) {
-        for (node in new_nodes) {
-          for (old_node in nodes) {
-            console.info(node)
-            if (new_nodes[node].id == nodes[old_node].id) {
-              console.info("not adding twice" + new_nodes[node].caption)
-              new_nodes.splice(node, 1);
-              stop = true;
-              
-              console.info('sliced');
-              break;
-            } else {
-              console.info("adding " + new_nodes[node].caption);
-            }
-          }
-        }
-        i++;
-        // if (stop == true) break;
-      }
-
-      for (n in new_nodes) {
-        console.info(new_nodes[n])  
-      }
+    needed = getJsonFrom("/data/subregions_of_grape/" + d.id);
+    genericExpand(d, needed["nodes"], needed["links"])
       
-      nodes = nodes.concat(new_nodes)
-      new_links = needed["links"]
-      links  = links.concat(new_links)
-      d.expanded = true;
-      if (new_links.length > 0 || new_nodes.length > 0) {
-        console.info("update")
-        update()
-      }
   } else if (d.expanded == true) {
     collapseNode(d);  
   }
 
 };
 
+function genericExpand(d, new_nodes, new_links) {
+  //remove node to expand from new_nodes
+  for (node in new_nodes) {
+    if (new_nodes[node].id == d.id) {
+      new_nodes.splice(node, 1);
+    }
+  }
+
+  //do not add a node the second time that is already displayed
+  var i = 0;
+  var stop = false
+  while (i <= new_nodes.length + 1) {
+    for (node in new_nodes) {
+      for (old_node in nodes) {
+        if (new_nodes[node].id == nodes[old_node].id) {
+          new_nodes.splice(node, 1);
+          stop = true;
+          break;
+        } 
+      }
+    }
+    i++;
+  }
+
+  nodes = nodes.concat(new_nodes)
+  links  = links.concat(new_links)
+  d.expanded = true;
+  if (new_links.length > 0 || new_nodes.length > 0) {
+    update();
+  }
+}
+
 function collapseNode(node) {
   if (node.type == "WineSubRegion") {
     to_clean_up = getJsonFrom("/data/grapes_at_subregion/" + node.id);
-    nodes_to_remove = to_clean_up["nodes"]
-
-    for (a_node_to_remove in nodes_to_remove) {
-      for (a_shown_node in nodes) {
-        if (nodes[a_shown_node].id == nodes_to_remove[a_node_to_remove].id 
-          && nodes_to_remove[a_node_to_remove].type != "WineSubRegion" 
-          && !isLinkedToMoreThanOne(nodes_to_remove[a_node_to_remove])) {
-          nodes.splice(a_shown_node, 1);
-        }
-      }
-    }
-
-    links_to_remove = to_clean_up["links"];
-    links = filterArray(links, links_to_remove);
-
-    node.expanded = false;
-    update();
+    genericCollapse(node, to_clean_up["nodes"], to_clean_up["links"], "WineSubRegion")
   } else if (node.type == "Grape") {
     to_clean_up = getJsonFrom("/data/subregions_of_grape/" + node.id);
-    nodes_to_remove = to_clean_up["nodes"]
-
-    for (a_node_to_remove in nodes_to_remove) {
-      for (a_shown_node in nodes) {
-        if (nodes[a_shown_node].id == nodes_to_remove[a_node_to_remove].id 
-          && nodes_to_remove[a_node_to_remove].type != "Grape" 
-          && !isLinkedToMoreThanOne(nodes_to_remove[a_node_to_remove])) {
-          nodes.splice(a_shown_node, 1);
-        }
-      }
-    }
-
-    links_to_remove = to_clean_up["links"];
-    links = filterArray(links, links_to_remove);
-
-    node.expanded = false;
-    update();
+    genericCollapse(node, to_clean_up["nodes"], to_clean_up["links"], "Grape")
   }
 };
+
+function genericCollapse(node, nodes_to_remove, links_to_remove, node_type) {
+  for (a_node_to_remove in nodes_to_remove) {
+    for (a_shown_node in nodes) {
+      if (nodes[a_shown_node].id == nodes_to_remove[a_node_to_remove].id 
+          && nodes_to_remove[a_node_to_remove].type != node_type 
+          && !isLinkedToMoreThanOne(nodes_to_remove[a_node_to_remove])) {
+        nodes.splice(a_shown_node, 1);
+      }
+    }
+  }
+
+  links = filterArray(links, links_to_remove);
+
+  node.expanded = false;
+  update();
+
+}
 
 function filterArray(source, filter) {
     var temp = [], i, result = [];
