@@ -1,17 +1,18 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="static/js/bootstrap.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <style>
-    .row > div {
+/*    .row > div {
         margin-top:10px;
         padding: 20px;
         outline: 2px solid #ccc;
         outline-offset: -10px;
         -moz-outline-radius: 10px;
         -webkit-outline-radius: 10px;
-     }
+     }*/
 
     .links line {
       stroke: #999;
@@ -26,11 +27,52 @@
   </style>
 </head>
 <body>
-  <div style="border:1px solid black">
-  <svg style="border:1px solid black"></svg>
+  <button onclick="reCenter()" type="button">Recenter</button>
+  <button onclick="zoomInClick()" type="button">Zoom in</button>
+  <button onclick="zoomOutClick()" type="button">Zoom out</button>
+  <button onclick="reset()" type="button">Reset view!</button>
+  <button onclick="hard_reset()" type="button">Clear view!</button>
+  <select id="wineRegions" name="WineRegions">
+    <option selected hidden>Choose a Region</option>
+    {% for region in regions %}
+      <option value="{{ region.id }}">{{ region.name }}</option>
+    {% endfor %}
+  </select>
+  <select id="wineSubregions" name="WineSubRegions">
+    <option selected hidden>Choose a Subregion</option>
+    {% for subregion in subregions %}
+      <option value="{{ subregion.id }}">{{ subregion.name }}</option>
+    {% endfor %}
+  </select>
+    <select id="grapes" name="Grapes">
+    <option selected hidden>Choose a Grape</option>
+    {% for grape in grapes %}
+      <option value="{{ grape.id }}">{{ grape.name }}</option>
+    {% endfor %}
+  </select>
+  <div class="row">
+    <div class="col-8">
+      <!-- <div style="border:1px solid black"> -->
+        <svg width="50%" style="border:1px solid black"></svg>
+      <!-- </div> -->
+    </div>
+    <div class="col-4">
+      <div class="row">
+        <label id="node-type">Type: Click on a node</label>
+      </div>
+      <div class="row">
+        <label id="node-name">Name: Click on a node</label>
+      </div>
+      <div class="row">
+        <label id="node-expanded">Expanded: Click on a node</label>
+      </div>
+      <div class="row">
+        <label id="node-details">Node details: Click on a node</label>
+      </div>
+    </div>
   </div>
   <script src="static/js/graph.js"></script>
   <script>
-    update()
+    reset()
   </script>
 </body>

@@ -16,7 +16,7 @@ class GrapeBySubregions(object):
 
     @staticmethod
     def format_data(data):
-        formatted_results = {"comment": "this is a nice comment", "nodes": [], "links": []}
+        formatted_results = {"nodes": [], "links": []}
         grape_to_add = True
         for record in data:
             grape = Node(record["grape"].id, next(iter(record["grape"].labels)), record["grape"].get("name"))

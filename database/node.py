@@ -6,4 +6,4 @@ class Node(object):
         self.expanded = False
 
     def to_json(self):
-        return {"caption": self.caption, "type": self.type, "id": self.id, "expanded": "false"}
+        return {"caption": self.caption, "type": self.type, "id": self.id, "expanded": "true" if self.expanded else "false"}
