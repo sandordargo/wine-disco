@@ -117,6 +117,9 @@ function update() {
       else if (d.type == "Grape") {
         return "blue";
       }
+      else if (d.type == "Winery") {
+        return "yellow";
+      }
       return color(d.caption); 
     });
     node.on("click", click)
@@ -265,12 +268,10 @@ function dragended(d) {
 
 function expandNode(d) {
   if (d.type == "WineRegion" && (d.expanded == "false" || d.expanded == false)) {
-      //needed = getJsonFrom("/data/grapes_at_subregion/" + d.id);
       needed = getJsonFrom("/data/regions/" + d.id);
       genericExpand(d, needed["nodes"], needed["links"]);
   } else if (d.type == "WineSubRegion" && (d.expanded == "false" || d.expanded == false)) {
-      //needed = getJsonFrom("/data/grapes_at_subregion/" + d.id);
-      needed = getJsonFrom("/data/subregion_with_grapes_and_parent/" + d.id);
+      needed = getJsonFrom("/data/subregion_with_grapes_and_parent_and_wineries/" + d.id);
       genericExpand(d, needed["nodes"], needed["links"]);
   } else if (d.type == "Grape" && (d.expanded == "false" || d.expanded == false)) {
     needed = getJsonFrom("/data/subregions_of_grape/" + d.id);
@@ -319,7 +320,7 @@ function genericExpand(d, new_nodes, new_links) {
 
 function collapseNode(node) {
   if (node.type == "WineSubRegion") {
-    to_clean_up = getJsonFrom("/data/subregion_with_grapes_and_parent/" + node.id);
+    to_clean_up = getJsonFrom("/data/subregion_with_grapes_and_parent_and_wineries/" + node.id);
     genericCollapse(node, to_clean_up["nodes"], to_clean_up["links"], "WineSubRegion")
   } else if (node.type == "Grape") {
     to_clean_up = getJsonFrom("/data/subregions_of_grape/" + node.id);

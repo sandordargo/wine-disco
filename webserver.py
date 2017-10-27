@@ -7,34 +7,41 @@ from domainobjects.wineregion import WineRegion
 from database import database
 from domainobjects.subregion_full_details import SubRegionFullDetails
 
+import arguments
+from database.driver import Driver
+
 app = Flask(__name__)
 app.secret_key = 'some_secret'
+app.password = None
+app.bolt_url = None
+app.username = None
+app.driver = None
 APPLICATION_NAME = "Family Tree Application"
 
 
 @app.route('/data/data')
 def get_all_regions_and_subregions():
-    return str(RegionSubRegionGrapeFullDetails())
+    return str(RegionSubRegionGrapeFullDetails(app.driver))
 
 
 @app.route('/data/regions/<region>')
 def get_region_by_id(region):
-    return str(WineRegion(region))
+    return str(WineRegion(app.driver, region))
 
 
-@app.route('/data/subregion_with_grapes_and_parent/<subregion>')
+@app.route('/data/subregion_with_grapes_and_parent_and_wineries/<subregion>')
 def get_full_sub_region_details(subregion):
-    return str(SubRegionFullDetails(subregion))
+    return str(SubRegionFullDetails(app.driver, subregion))
 
 
 @app.route('/data/grapes_at_subregion/<subregion>')
 def get_sub_region_details_2(subregion):
-    return str(GrapesGrownAtSubregion(subregion))
+    return str(GrapesGrownAtSubregion(app.driver, subregion))
 
 
 @app.route('/data/subregions_of_grape/<grape>')
 def get_subregions_of_grape(grape):
-    return str(GrapeBySubregions(grape))
+    return str(GrapeBySubregions(app.driver, grape))
 
 
 @app.route("/")
@@ -45,11 +52,11 @@ def show_tree():
         locale.setlocale(locale.LC_ALL, locale.locale_alias['hu_hu'])
     except:
         pass
-    sorted_grapes = database.get_grapes()
+    sorted_grapes = database.get_grapes(app.driver)
     sorted_grapes.sort(key=lambda grape: locale.strxfrm(grape.name))
-    sorted_regions = database.get_wineregions()
+    sorted_regions = database.get_wineregions(app.driver)
     sorted_regions.sort(key=lambda region: locale.strxfrm(region.name))
-    sorted_subregions = database.get_winesubregions()
+    sorted_subregions = database.get_winesubregions(app.driver)
     sorted_subregions.sort(key=lambda region: locale.strxfrm(region.name))
     return render_template('index.html',
                            regions=sorted_regions,
@@ -59,4 +66,9 @@ def show_tree():
 
 if __name__ == "__main__":
     app.debug = True
+    args = arguments.parse_arguments()
+    app.bolt_url = args.bolt_url
+    app.username = args.user
+    app.password = args.password
+    app.driver = Driver(app.bolt_url, app.username, app.password)
     app.run(host='0.0.0.0', port=5000)

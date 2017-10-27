@@ -4,9 +4,9 @@ from database.node import Node
 
 
 class GrapesGrownAtSubregion(object):
-    def __init__(self, subregion_id):
+    def __init__(self, driver, subregion_id):
         self.subregion_id = subregion_id
-        self.data = self.format_data(database.get_winesubregion_by_id(subregion_id))
+        self.data = self.format_data(database.get_winesubregion_by_id(driver, subregion_id))
 
     def __str__(self):
         return self.__repr__()

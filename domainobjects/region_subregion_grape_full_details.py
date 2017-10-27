@@ -4,8 +4,8 @@ from database.node import Node
 
 
 class RegionSubRegionGrapeFullDetails(object):
-    def __init__(self):
-        self.data = self.format_data(database.get_all_regions_subregions_grapes())
+    def __init__(self, driver):
+        self.data = self.format_data(database.get_all_regions_subregions_grapes(driver))
 
     def __str__(self):
         return self.__repr__()
