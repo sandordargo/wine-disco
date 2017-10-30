@@ -1,6 +1,7 @@
 from database import database
 from database.edge import Edge
 from database.node import Node
+from database.winery_node import WineryNode
 
 
 class SubRegionFullDetails(object):
@@ -40,7 +41,9 @@ class SubRegionFullDetails(object):
             if "located_in" in record and record["located_in"] is not None:
                 located_in_edge = Edge(record["located_in"].type, record["located_in"].start, record["located_in"].end)
             if "winery" in record and record["winery"] is not None:
-                winery = Node(record["winery"].id, next(iter(record["winery"].labels)), record["winery"].get("name"))
+                winery = WineryNode(record["winery"].id, next(iter(record["winery"].labels)),
+                                    record["winery"].get("name"), record["winery"].get("village"),
+                                    record["winery"].get("url"))
             if wsr_to_add:
                 formatted_results["nodes"].append(wsr.to_json())
                 wsr_to_add = False

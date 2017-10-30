@@ -211,7 +211,7 @@ function doubleclick(d)
 function getNodeDetails(node) {
   if (node.type == "WineRegion") {
     info = getJsonFrom("/data/regions/" + node.id);
-    subregions = "Subregions included: "
+    subregions = "<br>Subregions included: "
     for (node in info["nodes"]) {
       if (info["nodes"][node].type == "WineSubRegion") {
         subregions += info["nodes"][node].caption + ", ";
@@ -221,19 +221,21 @@ function getNodeDetails(node) {
     return subregions.slice(0, -2);
 
   } else if (node.type == "WineSubRegion") {
-    info = getJsonFrom("/data/subregion_with_grapes_and_parent/" + node.id);
+    info = getJsonFrom("/data/subregion_with_grapes_and_parent_and_wineries/" + node.id);
     parent = ""
     grapes = "Grapes produced: "
+    wineries = "Wineries in subregion: "
     for (node in info["nodes"]) {
       if (info["nodes"][node].type == "WineRegion") {
-        parent = "\r\nParent region: " + info["nodes"][node].caption;
+        parent = "<br>Parent region: " + info["nodes"][node].caption;
       } else if (info["nodes"][node].type == "Grape") {
         grapes += info["nodes"][node].caption + ", ";
+      } else if (info["nodes"][node].type == "Winery") {
+        wineries += info["nodes"][node].caption + ", ";
       }
-
     }
 
-    return (parent + "\r\n" + grapes).slice(0, -2);
+    return parent + "<br>" + grapes.slice(0, -2) + "<br>" + wineries.slice(0, -2);
   } else if (node.type == "Grape") {
     info = getJsonFrom("/data/subregions_of_grape/" + node.id);
     parentSubregions = "This grape is procuded at: "
@@ -245,6 +247,16 @@ function getNodeDetails(node) {
     }
 
     return parentSubregions.slice(0, -2);
+  } else if (node.type == "Winery") {
+    var url;
+    console.info(node.url)
+    console.info(typeof(node.url))
+    if (node.url === "" || node.url === null || typeof node.url === 'undefined') {
+      url = "Not available";
+    } else {
+      url = "<a href=\"" + node.url + "\">" + node.url + "</a>";
+    }
+    return "Name: " + node.caption + "<br>Village: " + node.village + "<br>Url: " + url;
   }
   return "no details for nodes with type of " + node.type;
 }
