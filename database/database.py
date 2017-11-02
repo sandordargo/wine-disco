@@ -27,6 +27,14 @@ def get_wineregion_by_id(driver, id):
     return result_set[0]["r"].get("name")
 
 
+def get_winery_by_id(driver, id):
+    return execute_query(driver,
+                         "match (winery:Winery)-[located_in:IS_LOCATED_IN]->(wsr:WineSubRegion) "
+                         "where id(winery) = {} "
+                         "return winery, located_in, wsr".format(
+                             id))
+
+
 def get_subregions_for_grape(driver, id):
     return execute_query(driver,
                          "match (grape:Grape)-[relationship:GROWS_AT]->(wsr:WineSubRegion) where id(grape) = {} "

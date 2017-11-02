@@ -4,6 +4,7 @@ from domainobjects.grape_by_subregions import GrapeBySubregions
 from domainobjects.grapes_grown_at_subregion import GrapesGrownAtSubregion
 from domainobjects.region_subregion_grape_full_details import RegionSubRegionGrapeFullDetails
 from domainobjects.wineregion import WineRegion
+from domainobjects.winery_with_subregion import WineryWithSubregion
 
 from database import database
 from domainobjects.subregion_full_details import SubRegionFullDetails
@@ -43,6 +44,11 @@ def get_sub_region_details_2(subregion):
 @app.route('/data/subregions_of_grape/<grape>')
 def get_subregions_of_grape(grape):
     return str(GrapeBySubregions(app.driver, grape))
+
+
+@app.route('/data/winery_and_subregion/<winery>')
+def get_winery_and_subregion(winery):
+    return str(WineryWithSubregion(app.driver, winery))
 
 
 @app.route("/")

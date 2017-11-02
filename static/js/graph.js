@@ -188,6 +188,15 @@ function getSubregion(id) {
     }
 }
 
+function getWinery(id) {
+    info = getJsonFrom("/data/winery_and_subregion/" + id);
+    for (node in info["nodes"]) {
+        if (info["nodes"][node].id == id) {
+            return info["nodes"][node];
+        }
+    }
+}
+
 function getNodeDetails(node) {
   if (node.type == "WineRegion") {
     info = getJsonFrom("/data/regions/" + node.id);
@@ -212,7 +221,8 @@ function getNodeDetails(node) {
         link = "<a href=\"javascript:doubleclick(getGrape(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
         grapes += link + ", ";
       } else if (info["nodes"][node_id].type == "Winery") {
-        wineries += info["nodes"][node_id].caption + ", ";
+        link = "<a href=\"javascript:doubleclick(getWinery(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
+        wineries += link + ", ";
       }
     }
     return parent + "<br>" + grapes.slice(0, -2) + "<br>" + wineries.slice(0, -2);
@@ -227,15 +237,21 @@ function getNodeDetails(node) {
     }
     return parentSubregions.slice(0, -2);
   } else if (node.type == "Winery") {
-    var url;
-    console.info(node.url)
-    console.info(typeof(node.url))
     if (node.url === "" || node.url === null || typeof node.url === 'undefined') {
       url = "Not available";
     } else {
       url = "<a href=\"" + node.url + "\">" + node.url + "</a>";
     }
-    return "<br>Name: " + node.caption + "<br>Village: " + node.village + "<br>Url: " + url;
+    info = getJsonFrom("/data/winery_and_subregion/" + node.id);
+    parentSubregion = "This grape is procuded at: "
+    for (node_id in info["nodes"]) {
+      if (info["nodes"][node_id].type == "WineSubRegion") {
+        link = "<a href=\"javascript:doubleclick(getSubregion(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
+        parentSubregion += link;
+      }
+    }
+    return "<br>Name: " + node.caption + "<br>Village: " + node.village + "<br>Url: " + url
+        + "<br>Is located at the subregion of " + parentSubregion;
   }
   return "no details for nodes with type of " + node.type;
 }
