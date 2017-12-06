@@ -1,7 +1,8 @@
 <head>
   <!-- <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/own.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <style>
@@ -27,24 +28,23 @@
   </style>
 </head>
 <body>
-  <button onclick="reCenter()" type="button">Recenter</button>
   <button onclick="zoomInClick()" type="button">Zoom in</button>
   <button onclick="zoomOutClick()" type="button">Zoom out</button>
   <button onclick="reset()" type="button">Reset view!</button>
   <button onclick="hard_reset()" type="button">Clear view!</button>
-  <select id="wineRegions" name="WineRegions">
+  <select id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
     <option selected hidden>Choose a Region</option>
     {% for region in regions %}
       <option value="{{ region.id }}">{{ region.name }}</option>
     {% endfor %}
   </select>
-  <select id="wineSubregions" name="WineSubRegions">
+  <select id="wineSubregions" name="WineSubRegions" onchange="addSubregion(this.value)">
     <option selected hidden>Choose a Subregion</option>
     {% for subregion in subregions %}
       <option value="{{ subregion.id }}">{{ subregion.name }}</option>
     {% endfor %}
   </select>
-    <select id="grapes" name="Grapes">
+    <select id="grapes" name="Grapes" onchange="addGrape(this.value)">
     <option selected hidden>Choose a Grape</option>
     {% for grape in grapes %}
       <option value="{{ grape.id }}">{{ grape.name }}</option>
