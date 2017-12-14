@@ -48,11 +48,12 @@ function resetView() {
     }))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
-  update(-20);
   clearDetails();
+  update(-20);
 }
 
 function clearDetails() {
+    detailedNode = null;
     document.getElementById("node-type").innerHTML = "Type: Click on a node";
     document.getElementById("node-name").innerHTML = "Name: Click on a node";
     document.getElementById("node-expanded").innerHTML = "Expanded: Click on a node";
@@ -64,12 +65,16 @@ function update(strength = -5) {
   links_to_display = links;
   nodes_to_display = nodes;
 
-   var elem = svg.selectAll("circle").data(nodes_to_display);
-   var elemEnter = elem.enter().append("g");
+  var elem = svg.selectAll("circle").data(nodes_to_display);
+  var elemEnter = elem.enter().append("g");
 
   var node = elemEnter
     .append("circle")
-    .attr("r", 8)
+    .attr("r", function(d) {
+        radius = 8;
+        d.radius = radius;
+        return radius;
+    })
     .attr("fill", function(d) {
       if (d.type == "WineSubRegion") {
         return "gray";
@@ -92,17 +97,17 @@ function update(strength = -5) {
         return "none";
     });
 
-    node
-        .on("click", expandNode)
-        .on("contextmenu", function (d, i) {
-            d3.event.preventDefault();
-            updateDetails(d)
-        });
+  node
+    .on("click", expandNode)
+    .on("contextmenu", function (d, i) {
+        d3.event.preventDefault();
+        updateDetails(d)
+    });
 
-    node.call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
+  node.call(d3.drag()
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended));
   
   node.append("title")
       .attr("title", function(d) { return d.type + ": " + d.caption; })
@@ -121,6 +126,9 @@ function update(strength = -5) {
     .nodes(nodes_to_display)
     .force("charge", d3.forceManyBody().strength(strength))
     .force("center", d3.forceCenter(width / 2, height / 2))
+    .force('collision', d3.forceCollide().radius(function(d) {
+    return d.radius
+  }))
     .on("tick", ticked)
     .force("link")
     .links(links_to_display);
@@ -187,6 +195,7 @@ function dragended(d) {
 function detailAndExpand(d) {
     expandNode(d);
     updateDetails(d);
+    update();
 }
 
 function updateDetails(d) {
@@ -309,7 +318,12 @@ function nodeIsCollapsed(node) {
 function genericExpand(d, new_nodes, new_links) {
   mergeNodes(new_nodes);
   mergeLinks(new_links);
-  d.expanded = true;
+  for (id in nodes) {
+    if (nodes[id].id == d.id) {
+        nodes[id].expanded = true;
+        break;
+    }
+  }
   update();
 }
 
@@ -338,7 +352,6 @@ function genericCollapse(node, nodes_to_remove, links_to_remove, node_type) {
   }
 
   links = filterArray(links, links_to_remove);
-
   node.expanded = false;
   update();
 }

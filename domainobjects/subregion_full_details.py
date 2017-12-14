@@ -31,7 +31,6 @@ class SubRegionFullDetails(object):
                 grape = Node(record["grape"].id, next(iter(record["grape"].labels)), record["grape"].get("name"))
             if "wsr" in record and record["wsr"] is not None:
                 wsr = Node(record["wsr"].id, next(iter(record["wsr"].labels)), record["wsr"].get("name"))
-                wsr.expanded = True
             if "grows_at" in record and record["grows_at"] is not None:
                 grows_at_edge = Edge(record["grows_at"].type, record["grows_at"].start, record["grows_at"].end)
             if "contains" in record and record["contains"] is not None:
