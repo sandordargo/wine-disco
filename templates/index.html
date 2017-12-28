@@ -30,22 +30,23 @@
 <body>
   <button onclick="zoomInClick()" type="button">Zoom in</button>
   <button onclick="zoomOutClick()" type="button">Zoom out</button>
-  <button onclick="reset()" type="button">Reset view!</button>
-  <button onclick="hard_reset()" type="button">Clear view!</button>
+  <button onclick="reset()" type="button">Restore original view</button>
+  <button onclick="hard_reset()" type="button">Empty view</button>
+  <button onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
   <select id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
-    <option selected hidden>Choose a Region</option>
+    <option selected hidden>Add region</option>
     {% for region in regions %}
       <option value="{{ region.id }}">{{ region.name }}</option>
     {% endfor %}
   </select>
   <select id="wineSubregions" name="WineSubRegions" onchange="addSubregion(this.value)">
-    <option selected hidden>Choose a Subregion</option>
+    <option selected hidden>Add subregion</option>
     {% for subregion in subregions %}
       <option value="{{ subregion.id }}">{{ subregion.name }}</option>
     {% endfor %}
   </select>
     <select id="grapes" name="Grapes" onchange="addGrape(this.value)">
-    <option selected hidden>Choose a Grape</option>
+    <option selected hidden>Choose grape</option>
     {% for grape in grapes %}
       <option value="{{ grape.id }}">{{ grape.name }}</option>
     {% endfor %}
@@ -53,6 +54,7 @@
   <div class="row">
     <div class="col-8">
       <!-- <div style="border:1px solid black"> -->
+
         <svg width="50%" style="border:1px solid black"></svg>
       <!-- </div> -->
     </div>

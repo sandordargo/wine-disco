@@ -456,3 +456,16 @@ function mergeLinks(new_links)   {
     }
   }
 }
+
+function keep_only_selected() {
+    if (detailedNode == null) {
+        alert("No node is selected!");
+        return;
+    }
+    node_to_keep = searchNodeInArray(nodes, detailedNode);
+    node_to_keep.expanded = false;
+    links = [];
+    nodes = [];
+    nodes.push(node_to_keep);
+    detailAndExpand(nodes[0])
+}
