@@ -9,6 +9,16 @@
 .svg-content-responsive {
     display: inline-block;
     position: absolute;
-    top: 10px;
+
     left: 0;
+    width: 90%;
+    /*height: 90%*/
+}
+.row {
+margin-left: auto;
+margin-right: auto;
+}
+
+.control-row {
+margin-bottom: 10px;
 }

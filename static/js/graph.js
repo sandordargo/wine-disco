@@ -1,5 +1,8 @@
-width = $(window).width() / 12 * 8
-height = $(window).height() / 10 * 9
+width = $(window).width() / 12 * 8;
+height = $(window).height() / 10 * 9;
+
+//width = $("body").width() / 12 * 8
+//height = $("body").height() / 10 * 9
 
 var svg = d3.select("svg").attr("width", width).attr("height", height)
     .attr("preserveAspectRatio", "xMinYMin meet")
@@ -202,7 +205,7 @@ function updateDetails(d) {
     updateElementWithText("node-type" , "Type: " + d.type);
     updateElementWithText("node-name" , "Name: " + d.caption);
     updateElementWithText("node-expanded" , "Expanded: " + d.expanded);
-    updateElementWithText("node-details" , "Node details: " + getNodeDetails(d));
+    updateElementWithText("node-details" , getNodeDetails(d));
     detailedNode = d.id;
     update();
 }
@@ -238,7 +241,7 @@ function searchNodeInArray(array, id) {
 function getNodeDetails(node) {
   if (node.type == "WineRegion") {
     info = getJsonFrom("/data/regions/" + node.id);
-    subregions = "<br>Subregions included: "
+    subregions = "Subregions included: "
     for (node_id in info["nodes"]) {
       if (info["nodes"][node_id].type == "WineSubRegion") {
         link = "<a href=\"javascript:detailAndExpand(getSubregion(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
@@ -254,7 +257,7 @@ function getNodeDetails(node) {
     for (node_id in info["nodes"]) {
       if (info["nodes"][node_id].type == "WineRegion") {
         link = "<a href=\"javascript:detailAndExpand(getRegion(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
-        parent = "<br>Parent region: " + link;
+        parent = "Parent region: " + link;
       } else if (info["nodes"][node_id].type == "Grape") {
         link = "<a href=\"javascript:detailAndExpand(getGrape(" + info["nodes"][node_id].id + "));\">" + info["nodes"][node_id].caption + "</a>"
         grapes += link + ", ";
@@ -287,7 +290,7 @@ function getNodeDetails(node) {
         parentSubregion = link;
       }
     }
-    return "<br>Name: " + node.caption + "<br>Village: " + node.village + "<br>Url: " + url
+    return "Name: " + node.caption + "<br>Village: " + node.village + "<br>Url: " + url
         + "<br>Is located at the subregion of " + parentSubregion;
   }
   return "no details for nodes with type of " + node.type;
@@ -325,6 +328,7 @@ function genericExpand(d, new_nodes, new_links) {
     }
   }
   update();
+  updateDetails(d);
 }
 
 function collapseNode(node) {
@@ -338,6 +342,7 @@ function collapseNode(node) {
     to_clean_up = getJsonFrom("/data/winery_and_subregion/" + node.id);
   }
   genericCollapse(node, to_clean_up["nodes"], to_clean_up["links"], node.type)
+  updateDetails(node);
 };
 
 function genericCollapse(node, nodes_to_remove, links_to_remove, node_type) {

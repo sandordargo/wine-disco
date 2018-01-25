@@ -28,51 +28,61 @@
   </style>
 </head>
 <body>
-  <button onclick="zoomInClick()" type="button">Zoom in</button>
-  <button onclick="zoomOutClick()" type="button">Zoom out</button>
-  <button onclick="reset()" type="button">Restore original view</button>
-  <button onclick="hard_reset()" type="button">Empty view</button>
-  <button onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
-  <select id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
+<div class="row control-row" style="margin-left: 10px;">
+  <button class="btn btn-default btn-sm" onclick="zoomInClick()" type="button">+</button>
+  <button class="btn btn-default btn-sm" onclick="zoomOutClick()" type="button">-</button>
+  <button class="btn btn-info" onclick="reset()" type="button">Restore original view</button>
+  <button class="btn btn-info" onclick="hard_reset()" type="button">Empty view</button>
+  <button class="btn btn-info" onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
+
+  <select class="btn dropdown-toggle dropdown-toggle-split" id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
     <option selected hidden>Add region</option>
     {% for region in regions %}
       <option value="{{ region.id }}">{{ region.name }}</option>
     {% endfor %}
   </select>
-  <select id="wineSubregions" name="WineSubRegions" onchange="addSubregion(this.value)">
+  <select class="btn dropdown-toggle dropdown-toggle-split" id="wineSubregions" name="WineSubRegions" onchange="addSubregion(this.value)">
     <option selected hidden>Add subregion</option>
     {% for subregion in subregions %}
       <option value="{{ subregion.id }}">{{ subregion.name }}</option>
     {% endfor %}
   </select>
-    <select id="grapes" name="Grapes" onchange="addGrape(this.value)">
+  <select class="btn dropdown-toggle dropdown-toggle-split" id="grapes" name="Grapes" onchange="addGrape(this.value)">
     <option selected hidden>Choose grape</option>
     {% for grape in grapes %}
       <option value="{{ grape.id }}">{{ grape.name }}</option>
     {% endfor %}
   </select>
+</div>
+
   <div class="row">
     <div class="col-8">
       <!-- <div style="border:1px solid black"> -->
 
-        <svg width="50%" style="border:1px solid black"></svg>
+        <svg width="50%" class="rounded" style="margin-left: 20px; border:1px solid #5bc0de"></svg>
       <!-- </div> -->
     </div>
+
     <div class="col-4">
-      <div class="row">
-        <label id="node-type">Type: Click on a node</label>
+      <div class="container">
+      <div id="details" class="rounded" style="border:1px solid #5bc0de">
+        <div class="row">
+          <label id="node-type">Node type: Click on a node</label>
+        </div>
+        <div class="row">
+          <label id="node-name">Name: Click on a node</label>
+        </div>
+        <div class="row" style="visibility:hidden">
+          <label id="node-expanded">Expanded: Click on a node</label>
+        </div>
+        <div class="row">
+          <label id="node-details">Node details: Click on a node</label>
+        </div>
       </div>
-      <div class="row">
-        <label id="node-name">Name: Click on a node</label>
-      </div>
-      <div class="row">
-        <label id="node-expanded">Expanded: Click on a node</label>
-      </div>
-      <div class="row">
-        <label id="node-details">Node details: Click on a node</label>
       </div>
     </div>
   </div>
+
   <script src="static/js/graph.js"></script>
   <script>
     reset()
