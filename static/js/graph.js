@@ -115,7 +115,7 @@ function update(strength = -5) {
   node.append("title")
       .attr("title", function(d) { return d.type + ": " + d.caption; })
       .text(function(d) {
-        return d.type + ": " + d.caption + " expanded: " + d.expanded + " id: " + d.id;
+        return d.type + ": " + d.caption /*+ " expanded: " + d.expanded + " id: " + d.id*/;
       });
 
   var link = svg.append("g")
