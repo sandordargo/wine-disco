@@ -328,7 +328,6 @@ function genericExpand(d, new_nodes, new_links) {
     }
   }
   update();
-  updateDetails(d);
 }
 
 function collapseNode(node) {
@@ -342,7 +341,6 @@ function collapseNode(node) {
     to_clean_up = getJsonFrom("/data/winery_and_subregion/" + node.id);
   }
   genericCollapse(node, to_clean_up["nodes"], to_clean_up["links"], node.type)
-  updateDetails(node);
 };
 
 function genericCollapse(node, nodes_to_remove, links_to_remove, node_type) {
