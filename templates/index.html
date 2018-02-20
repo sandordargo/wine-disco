@@ -29,11 +29,12 @@
 </head>
 <body>
 <div class="row control-row" style="margin-left: 10px;">
+  <button class="btn btn-info" id="aboutMeButton">About this page</button>
   <button class="btn btn-default btn-sm" onclick="zoomInClick()" type="button">+</button>
   <button class="btn btn-default btn-sm" onclick="zoomOutClick()" type="button">-</button>
-  <button class="btn btn-info" onclick="reset()" type="button">Restore original view</button>
-  <button class="btn btn-info" onclick="hard_reset()" type="button">Empty view</button>
-  <button class="btn btn-info" onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
+  <button class="btn btn-link" onclick="reset()" type="button">Restore original view</button>
+  <button class="btn btn-link" onclick="hard_reset()" type="button">Empty view</button>
+  <button class="btn btn-link" onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
 
   <select class="btn dropdown-toggle dropdown-toggle-split" id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
     <option selected hidden>Add region</option>
@@ -53,7 +54,35 @@
       <option value="{{ grape.id }}">{{ grape.name }}</option>
     {% endfor %}
   </select>
-</div>
+
+  <!-- The Modal -->
+  <div id="aboutMeModal" class="modal">
+
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Welcome to Wine-Disco!</h2>
+            <p>Wine-Disco is not a nightclub, but rather a discovery tool for the Hungarian wine culture.
+              Later other countries might be added to the tool.</p>
+            <p>Using Wine-Disco lets you explore the different regions and grapes of Hungary.
+              More specifically you can browse the following entities:</p>
+            <ul>
+              <li>Wine regions </li>
+              <li>Wine subregions</li>
+              <li>Grapes</li>
+              <li>Wineries</li>
+            </ul>
+            <p>If you just open up the tool, you will see a graph where each node represents either a wine region
+            or a wine subregion.</p>
+            <p>Double-click on a node and it will expand to show what other entities it relates to.</p>
+            <p>Right-click on one and you will see more details about that node.
+              In the details you can also find links, pointing to other nodes. Feel free to click on those.
+              In certain cases you can even find links outgoing from this page, for example taking you to site of a winery</p>
+            <p><b>Enjoy the discovery and drink good wine (with moderation of course)!</b></p>
+          </div>
+        </div>
+        <script src="/static/js/about_me.js"></script>
+  </div>
 
   <div class="row">
     <div class="col-8">
