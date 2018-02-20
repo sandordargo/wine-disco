@@ -301,7 +301,6 @@ function expandNode(d) {
       needed = getJsonFrom("/data/regions/" + d.id);
       genericExpand(d, needed["nodes"], needed["links"]);
   } else if (d.type == "WineSubRegion" && nodeIsCollapsed(d)) {
-      needed = getJsonFrom("/data/subregion_with_grapes_and_parent_and_wineries/" + d.id);
       genericExpand(d, needed["nodes"], needed["links"]);
   } else if (d.type == "Grape" && nodeIsCollapsed(d)) {
     needed = getJsonFrom("/data/subregions_of_grape/" + d.id);
