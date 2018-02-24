@@ -29,7 +29,6 @@
 </head>
 <body>
 <div class="row control-row" style="margin-left: 10px;">
-  <button class="btn btn-info" id="aboutMeButton">About this page</button>
   <button class="btn btn-default btn-sm" onclick="zoomInClick()" type="button">+</button>
   <button class="btn btn-default btn-sm" onclick="zoomOutClick()" type="button">-</button>
   <button class="btn btn-link" onclick="reset()" type="button">Restore original view</button>
@@ -54,6 +53,7 @@
       <option value="{{ grape.id }}">{{ grape.name }}</option>
     {% endfor %}
   </select>
+  <button class="btn btn-info" id="aboutMeButton" style="position: absolute; right: 0;">About this page</button>
 
   <!-- The Modal -->
   <div id="aboutMeModal" class="modal">
