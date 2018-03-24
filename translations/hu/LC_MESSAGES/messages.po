@@ -1,0 +1,157 @@
+# Hungarian translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-03-08 09:21+0100\n"
+"PO-Revision-Date: 2018-02-26 21:48+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: hu\n"
+"Language-Team: hu <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: flaskapp.py:129
+msgid "English"
+msgstr "Angol"
+
+#: templates/index.html:34
+msgid "Restore original view"
+msgstr "Eredeti nézet visszaállítása"
+
+#: templates/index.html:35
+msgid "Empty view"
+msgstr "Üres nézet"
+
+#: templates/index.html:36
+msgid "Keep only the selected node!"
+msgstr "Csak a kiválasztott csompópont megtartása!"
+
+#: templates/index.html:39
+msgid "Add region"
+msgstr "Régió hozzáadása"
+
+#: templates/index.html:45
+msgid "Add subregion"
+msgstr "Alrégió hozzáadása"
+
+#: templates/index.html:51 templates/index.html:58
+msgid "Choose grape"
+msgstr "Szőlőfajta"
+
+#: templates/index.html:69
+msgid "About this page"
+msgstr "Rólunk"
+
+#: templates/index.html:77
+msgid "Welcome to Wine-Disco!"
+msgstr "Üdvözli Önt a Wine-Disco!"
+
+#: templates/index.html:78
+msgid ""
+"Wine-Disco is not a nightclub, but rather a discovery tool for the "
+"Hungarian wine culture.\n"
+"              Later other countries might be added to the tool."
+msgstr ""
+"A Wine-Disco nem egy éjszakai bár, hanem sokkal inkább egy a magyar "
+"borkultúra felfedezésére szánt eszköz."
+
+#: templates/index.html:80
+msgid ""
+"Using Wine-Disco lets you explore the different regions and grapes of "
+"Hungary.\n"
+"              More specifically you can browse the following entities:"
+msgstr ""
+"A Wine-Discot használva felfedezheti a Magyarországon található különböző"
+" borvidékeket és szőlőfajtákat.\n"
+"Az alábbiak között böngészhet:"
+
+#: templates/index.html:83
+msgid "Wine regions"
+msgstr "Borrégiók"
+
+#: templates/index.html:84
+msgid "Wine subregions"
+msgstr "Borvidékek"
+
+#: templates/index.html:85
+msgid "Grapes"
+msgstr "Szőlőfajták"
+
+#: templates/index.html:86
+msgid "Wineries"
+msgstr "Borászatok"
+
+#: templates/index.html:88
+msgid ""
+"If you just open up the tool, you will see a graph where each node "
+"represents either a wine region\n"
+"            or a wine subregion."
+msgstr ""
+"Amennyiben megnyitja ezt az alkalmazást, egy gráfot láthat, melyben "
+"minden egyes csomópont egy borrégiót vagy borvidéket jelöl."
+
+#: templates/index.html:90
+msgid ""
+"Double-click on a node and it will expand to show what other entities it "
+"relates to."
+msgstr ""
+"Dupla klikk egy csomóponton, hogy kinyíljon és megmutassa, milyen egyéb "
+"csomópontokhoz kapcsolódik."
+
+#: templates/index.html:91
+msgid ""
+"Right-click on one and you will see more details about that node.\n"
+"              In the details you can also find links, pointing to other "
+"nodes. Feel free to click on those.\n"
+"              In certain cases you can even find links outgoing from this"
+" page, for example taking you to site of a winery"
+msgstr ""
+"Jobb klikk egyre és több információt láthat az adott csomópontról.\n"
+"A részletek között találhat további csomópontra mutató linkeket is.\n"
+"Nyugodtan kattintson rájuk.\n"
+"Bizonyos esetekben az oldalról kivezető linkekkel is találkozhat, mint "
+"melyek például az adott borászat honlapjára viszik Önt."
+
+#: templates/index.html:94
+msgid "Enjoy the discovery and drink good wine (with moderation of course)!"
+msgstr "Élvezze a felfedezést és igyon jó borokat (csak mértékkel természetesen)!"
+
+#: templates/index.html:112
+msgid "Node type: Click on a node"
+msgstr "Csomópont típusa: klikk egy csomópontra"
+
+#: templates/index.html:115
+msgid "Name: Click on a node"
+msgstr "Név: klikk egy csomópontra"
+
+#: templates/index.html:118
+msgid "Expanded: Click on a node"
+msgstr "EZ NE LÁTSZÓDJON"
+
+#: templates/index.html:121
+msgid "Node details: Click on a node"
+msgstr "Csomópont részletei: klikk egy csomópontra"
+
+#~ msgid "Type: Click on a node"
+#~ msgstr "Típus: Klikkeljen egy csomópontra"
+
+#~ msgid "Type: "
+#~ msgstr "Típus: "
+
+#~ msgid "Subregions included: "
+#~ msgstr "Borrégiók: "
+
+#~ msgid "Hungarian"
+#~ msgstr "Magyar"
+
+#~ msgid "French"
+#~ msgstr "Francia"
+

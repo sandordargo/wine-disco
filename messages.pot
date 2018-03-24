@@ -1,0 +1,127 @@
+# Translations template for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-03-08 09:21+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: flaskapp.py:129
+msgid "English"
+msgstr ""
+
+#: templates/index.html:34
+msgid "Restore original view"
+msgstr ""
+
+#: templates/index.html:35
+msgid "Empty view"
+msgstr ""
+
+#: templates/index.html:36
+msgid "Keep only the selected node!"
+msgstr ""
+
+#: templates/index.html:39
+msgid "Add region"
+msgstr ""
+
+#: templates/index.html:45
+msgid "Add subregion"
+msgstr ""
+
+#: templates/index.html:51 templates/index.html:58
+msgid "Choose grape"
+msgstr ""
+
+#: templates/index.html:69
+msgid "About this page"
+msgstr ""
+
+#: templates/index.html:77
+msgid "Welcome to Wine-Disco!"
+msgstr ""
+
+#: templates/index.html:78
+msgid ""
+"Wine-Disco is not a nightclub, but rather a discovery tool for the "
+"Hungarian wine culture.\n"
+"              Later other countries might be added to the tool."
+msgstr ""
+
+#: templates/index.html:80
+msgid ""
+"Using Wine-Disco lets you explore the different regions and grapes of "
+"Hungary.\n"
+"              More specifically you can browse the following entities:"
+msgstr ""
+
+#: templates/index.html:83
+msgid "Wine regions"
+msgstr ""
+
+#: templates/index.html:84
+msgid "Wine subregions"
+msgstr ""
+
+#: templates/index.html:85
+msgid "Grapes"
+msgstr ""
+
+#: templates/index.html:86
+msgid "Wineries"
+msgstr ""
+
+#: templates/index.html:88
+msgid ""
+"If you just open up the tool, you will see a graph where each node "
+"represents either a wine region\n"
+"            or a wine subregion."
+msgstr ""
+
+#: templates/index.html:90
+msgid ""
+"Double-click on a node and it will expand to show what other entities it "
+"relates to."
+msgstr ""
+
+#: templates/index.html:91
+msgid ""
+"Right-click on one and you will see more details about that node.\n"
+"              In the details you can also find links, pointing to other "
+"nodes. Feel free to click on those.\n"
+"              In certain cases you can even find links outgoing from this"
+" page, for example taking you to site of a winery"
+msgstr ""
+
+#: templates/index.html:94
+msgid "Enjoy the discovery and drink good wine (with moderation of course)!"
+msgstr ""
+
+#: templates/index.html:112
+msgid "Node type: Click on a node"
+msgstr ""
+
+#: templates/index.html:115
+msgid "Name: Click on a node"
+msgstr ""
+
+#: templates/index.html:118
+msgid "Expanded: Click on a node"
+msgstr ""
+
+#: templates/index.html:121
+msgid "Node details: Click on a node"
+msgstr ""
+

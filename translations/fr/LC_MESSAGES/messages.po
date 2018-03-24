@@ -1,0 +1,164 @@
+# French translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-03-08 09:21+0100\n"
+"PO-Revision-Date: 2018-02-26 21:48+0100\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: flaskapp.py:129
+msgid "English"
+msgstr "Anglais"
+
+#: templates/index.html:34
+msgid "Restore original view"
+msgstr "Réinitialiser"
+
+#: templates/index.html:35
+msgid "Empty view"
+msgstr "Vue vide"
+
+#: templates/index.html:36
+msgid "Keep only the selected node!"
+msgstr "Conservez uniquement le noeud sélectionné!"
+
+#: templates/index.html:39
+msgid "Add region"
+msgstr "Ajouter un vignoble"
+
+#: templates/index.html:45
+msgid "Add subregion"
+msgstr "Ajouter une région viticole"
+
+#: templates/index.html:51 templates/index.html:58
+msgid "Choose grape"
+msgstr "Choisir un cépage "
+
+#: templates/index.html:69
+msgid "About this page"
+msgstr "À propos du nous"
+
+#: templates/index.html:77
+msgid "Welcome to Wine-Disco!"
+msgstr "Bienvenue à Wine-Disco!"
+
+#: templates/index.html:78
+msgid ""
+"Wine-Disco is not a nightclub, but rather a discovery tool for the "
+"Hungarian wine culture.\n"
+"              Later other countries might be added to the tool."
+msgstr ""
+"Wine-Disco n'est pas une boîte de nuit, mais plutôt un outil de "
+"découverte de la culture viticole hongroise.\n"
+"Plus tard, d'autres pays pourraient être ajoutés à l'outil."
+
+#: templates/index.html:80
+msgid ""
+"Using Wine-Disco lets you explore the different regions and grapes of "
+"Hungary.\n"
+"              More specifically you can browse the following entities:"
+msgstr ""
+"Utilisation de Wine-Disco vous permet d'explorer les différentes régions "
+"et les cépages de la Hongrie.\n"
+"Plus spécifiquement, vous pouvez parcourir les entités suivantes:"
+
+#: templates/index.html:83
+msgid "Wine regions"
+msgstr "Vignobles"
+
+#: templates/index.html:84
+msgid "Wine subregions"
+msgstr "Régions viticoles"
+
+#: templates/index.html:85
+msgid "Grapes"
+msgstr "Cépages"
+
+#: templates/index.html:86
+msgid "Wineries"
+msgstr "Caves"
+
+#: templates/index.html:88
+msgid ""
+"If you just open up the tool, you will see a graph where each node "
+"represents either a wine region\n"
+"            or a wine subregion."
+msgstr ""
+"Si vous ouvrez simplement l'outil, vous verrez un graphique où chaque "
+"nœud représente soit une région viticole\n"
+" soit une sous-région viticole."
+
+#: templates/index.html:90
+msgid ""
+"Double-click on a node and it will expand to show what other entities it "
+"relates to."
+msgstr ""
+"Double-cliquez sur un noeud et il se développera pour montrer à quelles "
+"autres entités il se rapporte."
+
+#: templates/index.html:91
+msgid ""
+"Right-click on one and you will see more details about that node.\n"
+"              In the details you can also find links, pointing to other "
+"nodes. Feel free to click on those.\n"
+"              In certain cases you can even find links outgoing from this"
+" page, for example taking you to site of a winery"
+msgstr ""
+"Faites un clic droit sur l'un et vous verrez plus de détails sur ce nœud."
+"\n"
+"\n"
+"Dans les détails, vous pouvez également trouver des liens pointant vers "
+"d'autres nœuds.N'hésitez pas à cliquer sur ceux-ci.Dans certains cas, "
+"vous pouvez même trouver des liens sortants de cette page, par exemple "
+"vous emmener sur le site d'une cave"
+
+#: templates/index.html:94
+msgid "Enjoy the discovery and drink good wine (with moderation of course)!"
+msgstr "Profitez de la découverte et buvez du bon vin (avec modération bien sûr)!"
+
+#: templates/index.html:112
+msgid "Node type: Click on a node"
+msgstr "Type de noeud : cliquez sur un noeud"
+
+#: templates/index.html:115
+msgid "Name: Click on a node"
+msgstr "Nom : Cliquez sur un noeud"
+
+#: templates/index.html:118
+msgid "Expanded: Click on a node"
+msgstr "Expanded : cliquez sur un noeud"
+
+#: templates/index.html:121
+msgid "Node details: Click on a node"
+msgstr "Détails du nœud : Cliquez sur un nœud"
+
+#~ msgid "Type: Click on a node"
+#~ msgstr "Type : Cliquez sur un noeud"
+
+#~ msgid "Type: "
+#~ msgstr "Type : "
+
+#~ msgid "Subregions included: "
+#~ msgstr "Régions viticoles incluses:"
+
+#~ msgid "Hungarian"
+#~ msgstr "Hongrois"
+
+#~ msgid "French"
+#~ msgstr "Français"
+
+#~ msgid ""
+#~ msgstr ""
+

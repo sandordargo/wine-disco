@@ -31,29 +31,41 @@
 <div class="row control-row" style="margin-left: 10px;">
   <button class="btn btn-default btn-sm" onclick="zoomInClick()" type="button">+</button>
   <button class="btn btn-default btn-sm" onclick="zoomOutClick()" type="button">-</button>
-  <button class="btn btn-link" onclick="reset()" type="button">Restore original view</button>
-  <button class="btn btn-link" onclick="hard_reset()" type="button">Empty view</button>
-  <button class="btn btn-link" onclick="keep_only_selected()" type="button">Keep only the selected node!</button>
+  <button class="btn btn-link" onclick="reset()" type="button">{{ gettext('Restore original view') }}</button>
+  <button class="btn btn-link" onclick="hard_reset()" type="button">{{ gettext('Empty view') }}</button>
+  <button class="btn btn-link" onclick="keep_only_selected()" type="button">{{ gettext('Keep only the selected node!') }}</button>
 
   <select class="btn dropdown-toggle dropdown-toggle-split" id="wineRegions" name="WineRegions" onchange="addRegion(this.value)">
-    <option selected hidden>Add region</option>
+    <option selected hidden>{{ gettext('Add region') }}</option>
     {% for region in regions %}
       <option value="{{ region.id }}">{{ region.name }}</option>
     {% endfor %}
   </select>
   <select class="btn dropdown-toggle dropdown-toggle-split" id="wineSubregions" name="WineSubRegions" onchange="addSubregion(this.value)">
-    <option selected hidden>Add subregion</option>
+    <option selected hidden>{{ gettext('Add subregion') }}</option>
     {% for subregion in subregions %}
       <option value="{{ subregion.id }}">{{ subregion.name }}</option>
     {% endfor %}
   </select>
   <select class="btn dropdown-toggle dropdown-toggle-split" id="grapes" name="Grapes" onchange="addGrape(this.value)">
-    <option selected hidden>Choose grape</option>
+    <option selected hidden>{{ gettext('Choose grape') }}</option>
     {% for grape in grapes %}
       <option value="{{ grape.id }}">{{ grape.name }}</option>
     {% endfor %}
   </select>
-  <button class="btn btn-info" id="aboutMeButton" style="position: absolute; right: 0;">About this page</button>
+
+  <select class="btn dropdown-toggle dropdown-toggle-split" id="languages" name="Languages" onchange="changeLanguage(this.value)" >
+      <option value="HU" {% if g.locale.upper() == 'HU'.upper() %} selected="selected" {% endif %}>Magyar</option>
+      <option value="EN" {% if g.locale.upper() == 'EN'.upper() %} selected="selected" {% endif %}>English</option>
+      <option value="FR" {% if g.locale.upper() == 'FR'.upper() %} selected="selected" {% endif %}>Français</option>
+  </select>
+  <script>
+    function changeLanguage(language) {
+      window.location.href = "/" + language.toLowerCase() + "/";
+    }
+
+  </script>
+  <button class="btn btn-info" id="aboutMeButton" style="position: absolute; right: 0;">{{ gettext('About this page') }}</button>
 
   <!-- The Modal -->
   <div id="aboutMeModal" class="modal">
@@ -61,24 +73,24 @@
           <!-- Modal content -->
           <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Welcome to Wine-Disco!</h2>
-            <p>Wine-Disco is not a nightclub, but rather a discovery tool for the Hungarian wine culture.
-              Later other countries might be added to the tool.</p>
-            <p>Using Wine-Disco lets you explore the different regions and grapes of Hungary.
-              More specifically you can browse the following entities:</p>
+            <h2>{{ gettext('Welcome to Wine-Disco!') }}</h2>
+            <p>{{ gettext('Wine-Disco is not a nightclub, but rather a discovery tool for the Hungarian wine culture.
+              Later other countries might be added to the tool.') }}</p>
+            <p>{{ gettext('Using Wine-Disco lets you explore the different regions and grapes of Hungary.
+              More specifically you can browse the following entities:') }}</p>
             <ul>
-              <li>Wine regions </li>
-              <li>Wine subregions</li>
-              <li>Grapes</li>
-              <li>Wineries</li>
+              <li>{{ gettext('Wine regions') }}</li>
+              <li>{{ gettext('Wine subregions') }}</li>
+              <li>{{ gettext('Grapes') }}</li>
+              <li>{{ gettext('Wineries') }}</li>
             </ul>
-            <p>If you just open up the tool, you will see a graph where each node represents either a wine region
-            or a wine subregion.</p>
-            <p>Double-click on a node and it will expand to show what other entities it relates to.</p>
-            <p>Right-click on one and you will see more details about that node.
+            <p>{{ gettext('If you just open up the tool, you will see a graph where each node represents either a wine region
+            or a wine subregion.') }}</p>
+            <p>{{ gettext('Double-click on a node and it will expand to show what other entities it relates to.') }}</p>
+            <p>{{ gettext('Right-click on one and you will see more details about that node.
               In the details you can also find links, pointing to other nodes. Feel free to click on those.
-              In certain cases you can even find links outgoing from this page, for example taking you to site of a winery</p>
-            <p><b>Enjoy the discovery and drink good wine (with moderation of course)!</b></p>
+              In certain cases you can even find links outgoing from this page, for example taking you to site of a winery') }}</p>
+            <p><b>{{ gettext('Enjoy the discovery and drink good wine (with moderation of course)!') }}</b></p>
           </div>
         </div>
         <script src="/static/js/about_me.js"></script>
@@ -96,23 +108,26 @@
       <div class="container">
       <div id="details" class="rounded" style="border:1px solid #5bc0de">
         <div class="row">
-          <label id="node-type">Node type: Click on a node</label>
+          <label id="node-type">{{ gettext('Node type: Click on a node') }}</label>
         </div>
         <div class="row">
-          <label id="node-name">Name: Click on a node</label>
+          <label id="node-name">{{ gettext('Name: Click on a node') }}</label>
         </div>
         <div class="row" style="visibility:hidden">
-          <label id="node-expanded">Expanded: Click on a node</label>
+          <label id="node-expanded">{{ gettext('Expanded: Click on a node') }}</label>
         </div>
         <div class="row">
-          <label id="node-details">Node details: Click on a node</label>
+          <label id="node-details">{{ gettext('Node details: Click on a node') }}</label>
         </div>
       </div>
       </div>
     </div>
   </div>
 
-  <script src="static/js/graph.js"></script>
+
+  <script src="/static/js/graph-{{ g.locale }}.js"></script>
+  <script src="/static/js/graph-non-language-specific.js"></script>
+
   <script>
     reset()
   </script>

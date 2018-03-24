@@ -1,18 +1,23 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request, Blueprint, g
+from flask.ext.babelex import Babel, gettext
+
+import arguments
+
+from config import LANGUAGES
+
+from database import database
+from database.driver import Driver
+
 from domainobjects.grape_by_subregions import GrapeBySubregions
 from domainobjects.grapes_grown_at_subregion import GrapesGrownAtSubregion
 from domainobjects.region_subregion_grape_full_details import RegionSubRegionGrapeFullDetails
+from domainobjects.subregion_full_details import SubRegionFullDetails
 from domainobjects.wineregion import WineRegion
 from domainobjects.winery_with_subregion import WineryWithSubregion
 
-from database import database
-from domainobjects.subregion_full_details import SubRegionFullDetails
-
-import arguments
-from database.driver import Driver
-
 app = Flask(__name__)
+babel = Babel(app)
 app.secret_key = 'some_secret'
 app.password = None
 app.bolt_url = None
@@ -20,6 +25,15 @@ app.username = None
 app.driver = None
 APPLICATION_NAME = "Family Tree Application"
 
+language_blueprint = Blueprint('frontend', __name__, url_prefix='/<lang_code>', template_folder='templates',
+                               static_folder='static')
+default = Blueprint('default', __name__, url_prefix='/', template_folder='templates',
+                    static_folder='static')
+
+
+@app.before_request
+def before_request():
+    g.locale = get_locale()
 
 @app.route('/data/data')
 def get_all_regions_and_subregions():
@@ -51,8 +65,24 @@ def get_winery_and_subregion(winery):
     return str(WineryWithSubregion(app.driver, winery))
 
 
-@app.route("/")
-@app.route("/index.html")
+@babel.localeselector
+def get_locale():
+    lang = request.path[1:].split('/', 1)[0]
+    if lang and lang not in LANGUAGES:
+        lang = None
+    if not lang:
+        lang = request.accept_languages.best_match(LANGUAGES)
+    return lang
+
+
+@language_blueprint.url_value_preprocessor
+def pull_lang_code(endpoint, values):
+    g.lang_code = values.pop('lang_code')
+
+
+
+@language_blueprint.route("/")
+@default.route("/")
 def show_tree():
     import locale
     try:
@@ -70,6 +100,9 @@ def show_tree():
                            subregions=sorted_subregions,
                            grapes=sorted_grapes)
 
+
+app.register_blueprint(default)
+app.register_blueprint(language_blueprint)
 
 if __name__ == "__main__":
     app.debug = True
